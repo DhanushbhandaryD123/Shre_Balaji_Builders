@@ -1,17 +1,16 @@
 {
   "name": "balaji-bentota-root",
   "private": true,
+  "workspaces": [
+    "web"
+  ],
   "scripts": {
     "dev": "npm --prefix web run dev",
     "dev:web": "npm --prefix web run dev",
     "dev:studio": "npm --prefix studio run dev",
-    "build": "npm --prefix web run build",
-    "build:web": "npm --prefix web run build",
+    "build": "npm --prefix web install && npm --prefix web run build",
+    "build:web": "npm --prefix web install && npm --prefix web run build",
     "build:studio": "npm --prefix studio run build"
-  },
-
-  "dependencies": {
-    "motion": "^13.4.0"
   }
 }
 
