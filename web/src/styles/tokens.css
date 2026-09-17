@@ -1,0 +1,18 @@
+:root {
+  --color-bg: #FFFFFF;
+  --color-bg-alt: #FAF9F6;
+  --color-navy: #12233F;
+  --color-maroon: #6E1E2A;
+  --color-gold: #C9A35C;
+  --color-text-dark: #12233F;
+  --color-text-muted: #5A6A85;
+  --color-border-light: rgba(18, 35, 63, 0.08);
+
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-display: 'Cinzel', serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-numeral: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+
+  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}

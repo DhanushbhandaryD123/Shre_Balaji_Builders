@@ -1,0 +1,150 @@
+@import './tokens.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: auto;
+    font-family: var(--font-sans);
+    color: var(--color-text-dark);
+    background-color: var(--color-bg);
+  }
+
+  body {
+    overflow-x: hidden;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, .font-serif-luxury {
+    font-family: var(--font-serif);
+    letter-spacing: -0.015em;
+  }
+
+  .font-display-luxury {
+    font-family: var(--font-display);
+    letter-spacing: 0.05em;
+  }
+
+  .font-numeral, .font-mono {
+    font-family: var(--font-numeral) !important;
+    font-variant-numeric: tabular-nums lining-nums;
+    font-feature-settings: "tnum" 1, "lnum" 1;
+    letter-spacing: -0.01em;
+  }
+
+}
+
+/* Lenis smooth scrolling recommendations */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Hover underline micro-interaction */
+.hover-draw-underline {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.hover-draw-underline::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: currentColor;
+  transform-origin: bottom left;
+  transition: transform 250ms var(--ease-smooth);
+}
+
+.hover-draw-underline:hover::after {
+  transform: scaleX(1);
+}
+
+/* Interactive Card lift */
+.card-lift {
+  transition: transform 250ms var(--ease-smooth), box-shadow 250ms var(--ease-smooth);
+}
+
+.card-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 30px -10px rgba(18, 35, 63, 0.12);
+}
+
+/* Ken-Burns gentle zoom animation */
+@keyframes kenBurnsSlow {
+  0% {
+    transform: scale(1.02);
+  }
+  50% {
+    transform: scale(1.12);
+  }
+  100% {
+    transform: scale(1.02);
+  }
+}
+
+.animate-ken-burns {
+  animation: kenBurnsSlow 20s ease-in-out infinite alternate;
+}
+
+/* Marquee track */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 35s linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Gold Gradient text helper */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #DFCA97 0%, #C9A35C 50%, #946F3E 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-ken-burns,
+  .marquee-track {
+    animation: none !important;
+  }
+}
