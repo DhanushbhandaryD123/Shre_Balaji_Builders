@@ -7,7 +7,6 @@ import {
   Sparkles,
   Phone,
   ArrowRight,
-  RotateCcw,
   Building2,
   CheckCircle2,
 } from 'lucide-react'
@@ -597,10 +596,6 @@ export const ChatBot: React.FC = () => {
     }, 2000)
   }
 
-  const handleReset = () => {
-    setMessages(INITIAL_MESSAGES)
-  }
-
   return (
     <aside aria-label="Balaji Bentota AI Assistant">
       {/* 1. Floating Notification Teaser Bubble (Bottom Right) */}
@@ -657,7 +652,12 @@ export const ChatBot: React.FC = () => {
 
       {/* 3. Luxury Chat Window Panel */}
       {isOpen && (
-        <div className="fixed inset-x-3 bottom-20 top-20 sm:top-auto sm:inset-x-auto sm:right-6 sm:bottom-24 sm:w-[390px] sm:h-[560px] z-50 bg-white rounded-3xl shadow-2xl border border-navy/15 overflow-hidden flex flex-col animate-in fade-in slide-in-from-bottom-5 duration-300">
+        <div
+          data-lenis-prevent="true"
+          onWheel={(e) => e.stopPropagation()}
+          onTouchMove={(e) => e.stopPropagation()}
+          className="fixed inset-x-3 bottom-20 top-20 sm:top-auto sm:inset-x-auto sm:right-6 sm:bottom-24 sm:w-[390px] sm:h-[560px] z-50 bg-white rounded-3xl shadow-2xl border border-navy/15 overflow-hidden flex flex-col overscroll-contain animate-in fade-in slide-in-from-bottom-5 duration-300"
+        >
           {/* Header Bar */}
           <div className="bg-gradient-to-r from-navy via-navy to-navy-950 text-white p-4 flex items-center justify-between border-b border-gold/20 shadow-md shrink-0">
             <div className="flex items-center gap-3">
@@ -678,15 +678,7 @@ export const ChatBot: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex items-center gap-1 text-white/80">
-              <button
-                onClick={handleReset}
-                title="Restart conversation"
-                className="p-2 rounded-xl hover:bg-white/10 hover:text-white transition-colors"
-                aria-label="Restart conversation"
-              >
-                <RotateCcw className="w-4 h-4" />
-              </button>
+            <div className="flex items-center text-white/80">
               <button
                 onClick={() => setIsOpen(false)}
                 title="Close chat window"
@@ -713,8 +705,13 @@ export const ChatBot: React.FC = () => {
             </a>
           </div>
 
-          {/* Message Stream */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-3.5 bg-slate-50/50">
+          {/* Message Stream with data-lenis-prevent and isolated scrolling */}
+          <div
+            data-lenis-prevent="true"
+            onWheel={(e) => e.stopPropagation()}
+            onTouchMove={(e) => e.stopPropagation()}
+            className="flex-1 overflow-y-auto p-4 space-y-3.5 bg-slate-50/50 overscroll-contain touch-pan-y"
+          >
             {messages.map((msg) => (
               <div
                 key={msg.id}
