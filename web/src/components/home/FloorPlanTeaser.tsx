@@ -44,10 +44,10 @@ export const FloorPlanTeaser: React.FC = () => {
             </p>
 
             {/* BHK Filter Toggle Buttons */}
-            <div className="inline-flex p-1.5 rounded-xl bg-navy-50 border border-navy-100 mt-8 gap-2">
+            <div className="flex flex-col sm:inline-flex sm:flex-row p-1.5 rounded-2xl sm:rounded-xl bg-navy-50 border border-navy-100 mt-6 sm:mt-8 gap-1.5 sm:gap-2 max-w-md sm:max-w-none mx-auto">
               <button
                 onClick={() => setSelectedBHK('3BHK')}
-                className={`px-6 py-2.5 rounded-lg text-sm font-semibold transition-all ${
+                className={`px-4 sm:px-6 py-2.5 rounded-xl sm:rounded-lg text-xs sm:text-sm font-semibold transition-all ${
                   selectedBHK === '3BHK'
                     ? 'bg-maroon text-white shadow-md'
                     : 'text-navy/70 hover:text-navy hover:bg-white/60'
@@ -57,7 +57,7 @@ export const FloorPlanTeaser: React.FC = () => {
               </button>
               <button
                 onClick={() => setSelectedBHK('2BHK')}
-                className={`px-6 py-2.5 rounded-lg text-sm font-semibold transition-all ${
+                className={`px-4 sm:px-6 py-2.5 rounded-xl sm:rounded-lg text-xs sm:text-sm font-semibold transition-all ${
                   selectedBHK === '2BHK'
                     ? 'bg-maroon text-white shadow-md'
                     : 'text-navy/70 hover:text-navy hover:bg-white/60'

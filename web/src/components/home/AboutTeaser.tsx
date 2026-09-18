@@ -69,7 +69,7 @@ export const AboutTeaser: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex items-center gap-5">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3.5 sm:gap-5">
                 <Link
                   to="/about"
                   className="inline-flex items-center gap-2 text-sm font-semibold text-white bg-navy hover:bg-navy-800 px-6 py-3.5 rounded-xl shadow-md transition-all hover:scale-[1.02]"
