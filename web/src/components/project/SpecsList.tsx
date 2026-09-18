@@ -61,9 +61,6 @@ export const SpecsList: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-14">
           <SectionReveal yOffset={20}>
-            <Badge variant="gold" className="mb-3">
-              Materials &amp; Engineering
-            </Badge>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-navy tracking-tight leading-tight">
               Premium Project Specifications
             </h2>

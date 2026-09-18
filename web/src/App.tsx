@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import { Navbar } from './components/layout/Navbar'
 import { Footer } from './components/layout/Footer'
 import { WhatsAppButton } from './components/layout/WhatsAppButton'
+import { ChatBot } from './components/layout/ChatBot'
 import { Preloader } from './components/layout/Preloader'
 import { Home } from './pages/Home'
 import { About } from './pages/About'
@@ -39,8 +40,11 @@ export const App: React.FC = () => {
       {/* Global Footer */}
       <Footer />
 
-      {/* Floating WhatsApp Action Button */}
+      {/* Floating WhatsApp Action Button (Left Corner) */}
       <WhatsAppButton phoneNumber="919740763625" />
+
+      {/* Floating Interactive AI Concierge ChatBot (Right Corner) */}
+      <ChatBot />
     </div>
   )
 }

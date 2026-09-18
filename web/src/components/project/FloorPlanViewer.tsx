@@ -20,9 +20,6 @@ export const FloorPlanViewer: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-12 gap-6">
           <SectionReveal yOffset={20}>
-            <Badge variant="maroon" className="mb-3">
-              Interactive Schematic
-            </Badge>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-navy tracking-tight leading-tight">
               Architectural Floor Plan Viewer
             </h2>

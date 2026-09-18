@@ -53,9 +53,6 @@ export const BuilderStory: React.FC = () => {
           {/* Right Column: Story Copy */}
           <div className="lg:col-span-7">
             <SectionReveal yOffset={25}>
-              <Badge variant="maroon" className="mb-4">
-                Our Genesis &amp; Philosophy
-              </Badge>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-navy tracking-tight leading-tight mb-6">
                 Building Landmarks That Stand The Test Of Time
               </h2>

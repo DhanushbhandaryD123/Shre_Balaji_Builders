@@ -69,9 +69,6 @@ export const UnitMixTable: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <SectionReveal yOffset={20}>
-            <Badge variant="gold" className="mb-3">
-              Area Statements &amp; Unit Mix
-            </Badge>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-navy tracking-tight leading-tight">
               Apartment Dimensions &amp; Specifications
             </h2>

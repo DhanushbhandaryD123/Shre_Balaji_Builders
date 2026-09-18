@@ -14,9 +14,6 @@ export const ConsultantCredit: React.FC = () => {
 
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-8 border-b border-navy/10">
               <div>
-                <Badge variant="gold" className="mb-2">
-                  Architectural Leadership
-                </Badge>
                 <h3 className="text-2xl sm:text-3xl font-serif font-bold text-navy">
                   Consultant: A.G. Associates
                 </h3>
