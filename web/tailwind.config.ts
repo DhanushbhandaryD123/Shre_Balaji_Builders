@@ -54,10 +54,10 @@ export default {
         },
       },
       fontFamily: {
-        serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
-        display: ['Cinzel', '"Cormorant Garamond"', 'serif'],
+        serif: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+        display: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
         sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
-        numeral: ['Outfit', '"Plus Jakarta Sans"', 'sans-serif'],
+        numeral: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
       },
 
       animation: {

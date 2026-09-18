@@ -58,6 +58,17 @@ export const ChatBot: React.FC = () => {
     }
   }, [messages, isTyping, isOpen])
 
+  // Prevent background body scrolling on mobile & desktop while chat is open
+  useEffect(() => {
+    if (isOpen) {
+      const prevOverflow = document.body.style.overflow
+      document.body.style.overflow = 'hidden'
+      return () => {
+        document.body.style.overflow = prevOverflow
+      }
+    }
+  }, [isOpen])
+
   // Show friendly notification pill after 3.5 seconds
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -68,14 +79,16 @@ export const ChatBot: React.FC = () => {
     return () => clearTimeout(timer)
   }, [isOpen])
 
-  // Focus input when opened
+  // Focus input when opened on desktop (avoid popping virtual keyboard unprompted on mobile)
   useEffect(() => {
     if (isOpen) {
       setHasUnread(false)
       setShowNotificationBubble(false)
-      setTimeout(() => {
-        inputRef.current?.focus()
-      }, 300)
+      if (typeof window !== 'undefined' && window.innerWidth >= 640) {
+        setTimeout(() => {
+          inputRef.current?.focus()
+        }, 300)
+      }
     }
   }, [isOpen])
 
@@ -602,18 +615,18 @@ export const ChatBot: React.FC = () => {
       {showNotificationBubble && !isOpen && (
         <div
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-20 right-4 sm:bottom-24 sm:right-6 z-40 bg-white text-navy px-4 py-3 rounded-2xl shadow-2xl border border-gold/30 max-w-[270px] cursor-pointer animate-in fade-in slide-in-from-bottom-3 duration-300 flex items-start gap-3 hover:scale-105 transition-transform group"
+          className="fixed bottom-[74px] right-4 sm:bottom-24 sm:right-6 z-40 bg-white text-navy px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-2xl shadow-2xl border border-gold/30 max-w-[240px] sm:max-w-[275px] cursor-pointer animate-in fade-in slide-in-from-bottom-3 duration-300 flex items-start gap-2.5 hover:scale-105 transition-transform group"
         >
           <div className="w-8 h-8 rounded-full bg-navy text-gold flex items-center justify-center shrink-0 shadow-md">
             <Sparkles className="w-4 h-4 text-gold animate-pulse" />
           </div>
-          <div>
+          <div className="flex-1 min-w-0">
             <p className="text-xs font-bold text-navy group-hover:text-maroon transition-colors flex items-center gap-1.5">
               <span>Balaji Concierge</span>
               <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" />
             </p>
             <p className="text-[11px] text-slate-600 mt-0.5 leading-snug">
-              Have questions on 2 &amp; 3 BHK floor plans or pricing? Tap to chat!
+              Questions on 2 &amp; 3 BHK floor plans or pricing? Tap to chat!
             </p>
           </div>
           <button
@@ -630,19 +643,22 @@ export const ChatBot: React.FC = () => {
       )}
 
       {/* 2. Floating Circular Launch Button (Bottom Right) */}
+      {/* Same prominent, visible size as desktop: 56px (w-14 h-14) with bold w-7 h-7 icon */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         aria-label={isOpen ? 'Close Balaji AI Concierge' : 'Open Balaji AI Concierge'}
-        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-navy via-navy to-maroon text-gold hover:text-white border-2 border-gold/70 flex items-center justify-center shadow-2xl transition-all duration-300 hover:scale-110 active:scale-95 group focus:outline-none"
+        className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 w-14 h-14 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-navy via-navy to-maroon text-gold hover:text-white border-2 border-gold/80 items-center justify-center shadow-2xl transition-all duration-300 hover:scale-110 active:scale-95 group focus:outline-none ${
+          isOpen ? 'hidden sm:flex' : 'flex'
+        }`}
       >
         {isOpen ? (
           <X className="w-6 h-6 text-white transition-transform duration-200 rotate-90 group-hover:rotate-0" />
         ) : (
-          <div className="relative flex items-center justify-center">
-            <MessageSquare className="w-6 h-6 text-gold group-hover:text-white transition-colors" />
-            <Sparkles className="w-3 h-3 text-gold-300 absolute -top-1.5 -right-1.5 animate-ping" />
+          <div className="relative flex items-center justify-center w-full h-full">
+            <MessageSquare className="w-7 h-7 text-gold group-hover:text-white transition-colors" />
+            <Sparkles className="w-3.5 h-3.5 text-gold-300 absolute top-2 right-2 animate-ping pointer-events-none" />
             {hasUnread && (
-              <span className="absolute -top-1.5 -right-1.5 w-3.5 h-3.5 bg-maroon text-[9px] font-bold text-white rounded-full flex items-center justify-center border border-white">
+              <span className="absolute top-1.5 right-1.5 w-4 h-4 bg-maroon text-[10px] font-bold text-white rounded-full flex items-center justify-center border-2 border-white shadow-md">
                 1
               </span>
             )}
@@ -650,55 +666,56 @@ export const ChatBot: React.FC = () => {
         )}
       </button>
 
-      {/* 3. Luxury Chat Window Panel */}
+      {/* 3. Luxury Chat Window Panel - Native Full-Screen on Mobile, Floating Luxury Card on Desktop */}
       {isOpen && (
         <div
           data-lenis-prevent="true"
           onWheel={(e) => e.stopPropagation()}
           onTouchMove={(e) => e.stopPropagation()}
-          className="fixed inset-x-3 bottom-20 top-20 sm:top-auto sm:inset-x-auto sm:right-6 sm:bottom-24 sm:w-[390px] sm:h-[560px] z-50 bg-white rounded-3xl shadow-2xl border border-navy/15 overflow-hidden flex flex-col overscroll-contain animate-in fade-in slide-in-from-bottom-5 duration-300"
+          className="fixed inset-0 sm:inset-auto sm:right-6 sm:bottom-24 sm:w-[400px] sm:h-[590px] sm:max-h-[85vh] z-50 bg-white flex flex-col sm:rounded-3xl sm:shadow-2xl sm:border sm:border-navy/15 overflow-hidden overscroll-contain animate-in fade-in duration-200 h-[100dvh] sm:h-[590px]"
         >
-          {/* Header Bar */}
-          <div className="bg-gradient-to-r from-navy via-navy to-navy-950 text-white p-4 flex items-center justify-between border-b border-gold/20 shadow-md shrink-0">
-            <div className="flex items-center gap-3">
-              <div className="relative">
+          {/* Header Bar with iOS Notch safe-area spacing */}
+          <div className="bg-gradient-to-r from-navy via-navy to-navy-950 text-white px-4 py-3 sm:py-3.5 flex items-center justify-between border-b border-gold/20 shadow-md shrink-0 pt-[max(0.75rem,env(safe-area-inset-top))]">
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="relative shrink-0">
                 <div className="w-10 h-10 rounded-2xl bg-white/10 border border-gold/40 flex items-center justify-center text-gold shadow-inner">
                   <Building2 className="w-5 h-5 text-gold" />
                 </div>
                 <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-navy" />
               </div>
-              <div>
-                <h3 className="font-serif font-bold text-base text-white leading-tight flex items-center gap-1.5">
-                  <span>Balaji Assistant</span>
-                  <Sparkles className="w-3.5 h-3.5 text-gold" />
+              <div className="min-w-0">
+                <h3 className="font-serif font-bold text-base text-white leading-tight flex items-center gap-1.5 truncate">
+                  <span>Balaji Concierge</span>
+                  <Sparkles className="w-3.5 h-3.5 text-gold shrink-0" />
                 </h3>
-                <p className="text-[11px] text-gold-200/90 font-light flex items-center gap-1">
+                <p className="text-[11px] text-gold-200/90 font-light flex items-center gap-1 truncate">
                   <span>Indrali, Udupi • Instant Answers</span>
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center text-white/80">
+            <div className="flex items-center shrink-0 ml-2">
               <button
                 onClick={() => setIsOpen(false)}
                 title="Close chat window"
-                className="p-2 rounded-xl hover:bg-white/10 hover:text-white transition-colors"
+                className="p-2 sm:p-2 rounded-xl bg-white/10 hover:bg-white/20 active:bg-white/30 text-white transition-colors flex items-center gap-1"
                 aria-label="Close chat window"
               >
                 <X className="w-5 h-5" />
+                <span className="text-xs sm:hidden font-medium pr-1">Close</span>
               </button>
             </div>
           </div>
 
           {/* Quick Status Bar */}
-          <div className="bg-navy-50/90 px-4 py-1.5 border-b border-navy/5 flex items-center justify-between text-[11px] text-navy/70 shrink-0">
-            <span className="flex items-center gap-1.5 font-medium">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-              <span>Verified Brochure Data</span>
+          <div className="bg-navy-50/90 px-4 py-2 border-b border-navy/5 flex items-center justify-between text-[11px] sm:text-xs text-navy/70 shrink-0">
+            <span className="flex items-center gap-1.5 font-medium truncate">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+              <span className="truncate">Verified Brochure Data</span>
             </span>
             <a
               href="tel:+919740763625"
-              className="font-semibold text-maroon hover:underline flex items-center gap-1"
+              className="font-semibold text-maroon hover:underline flex items-center gap-1 shrink-0 ml-2"
             >
               <Phone className="w-3 h-3" />
               <span>+91 9740763625</span>
@@ -710,7 +727,7 @@ export const ChatBot: React.FC = () => {
             data-lenis-prevent="true"
             onWheel={(e) => e.stopPropagation()}
             onTouchMove={(e) => e.stopPropagation()}
-            className="flex-1 overflow-y-auto p-4 space-y-3.5 bg-slate-50/50 overscroll-contain touch-pan-y"
+            className="flex-1 overflow-y-auto p-3.5 sm:p-4 space-y-3.5 bg-slate-50/60 overscroll-contain touch-pan-y"
           >
             {messages.map((msg) => (
               <div
@@ -720,7 +737,7 @@ export const ChatBot: React.FC = () => {
                 }`}
               >
                 <div
-                  className={`max-w-[85%] rounded-2xl p-3.5 text-xs sm:text-sm leading-relaxed whitespace-pre-line shadow-sm ${
+                  className={`max-w-[88%] sm:max-w-[82%] rounded-2xl p-3 sm:p-3.5 text-xs sm:text-sm leading-relaxed whitespace-pre-line shadow-sm ${
                     msg.sender === 'user'
                       ? 'bg-maroon text-white rounded-br-none'
                       : 'bg-white text-slate-800 border border-navy/10 rounded-bl-none'
@@ -763,12 +780,12 @@ export const ChatBot: React.FC = () => {
                 {msg.sender === 'bot' &&
                   msg.quickReplies &&
                   msg.id === messages[messages.length - 1].id && (
-                    <div className="flex flex-wrap gap-1.5 mt-2 max-w-[95%]">
+                    <div className="flex flex-wrap gap-1.5 mt-2 max-w-full">
                       {msg.quickReplies.map((reply, i) => (
                         <button
                           key={i}
                           onClick={() => handleSendMessage(reply)}
-                          className="text-[11px] font-medium text-navy bg-white hover:bg-navy-50 hover:border-gold border border-navy/15 rounded-xl px-2.5 py-1 transition-all shadow-sm active:scale-95 text-left"
+                          className="text-xs font-medium text-navy bg-white hover:bg-navy-50 hover:border-gold border border-navy/15 rounded-xl px-3 py-1.5 transition-all shadow-sm active:scale-95 text-left active:bg-gold/10"
                         >
                           {reply}
                         </button>
@@ -780,7 +797,7 @@ export const ChatBot: React.FC = () => {
 
             {/* Realistic 2-Second Typing Indicator with animation */}
             {isTyping && (
-              <div className="flex items-center gap-2 bg-white border border-navy/10 rounded-2xl rounded-bl-none px-4 py-2.5 w-fit shadow-sm animate-in fade-in duration-200">
+              <div className="flex items-center gap-2 bg-white border border-navy/10 rounded-2xl rounded-bl-none px-3.5 py-2 sm:px-4 sm:py-2.5 w-fit shadow-sm animate-in fade-in duration-200">
                 <div className="w-2 h-2 rounded-full bg-gold animate-ping" />
                 <span className="text-xs text-slate-500 font-medium">
                   Balaji Concierge is typing an answer...
@@ -802,26 +819,26 @@ export const ChatBot: React.FC = () => {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Quick Input Bar */}
+          {/* Quick Input Bar with Safe Area Bottom Inset & 16px Font on Mobile to Prevent iOS Safari Auto-Zoom */}
           <form
             onSubmit={(e) => {
               e.preventDefault()
               handleSendMessage()
             }}
-            className="p-3 bg-white border-t border-navy/10 flex items-center gap-2 shrink-0"
+            className="p-3 sm:p-3.5 bg-white border-t border-navy/10 flex items-center gap-2 shrink-0 pb-[max(0.75rem,env(safe-area-inset-bottom))]"
           >
             <input
               ref={inputRef}
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask about 2/3 BHK, price, loans, location..."
-              className="flex-1 text-xs sm:text-sm px-3.5 py-2.5 rounded-xl border border-navy/20 focus:border-maroon focus:ring-1 focus:ring-maroon outline-none transition-all placeholder:text-slate-400"
+              placeholder="Ask about 2/3 BHK, price, loan..."
+              className="flex-1 text-base sm:text-sm px-3.5 py-2.5 rounded-xl border border-navy/20 focus:border-maroon focus:ring-1 focus:ring-maroon outline-none transition-all placeholder:text-slate-400 bg-slate-50/50 focus:bg-white"
             />
             <button
               type="submit"
               disabled={!input.trim() || isTyping}
-              className="w-10 h-10 rounded-xl bg-maroon hover:bg-maroon-800 disabled:opacity-40 text-white flex items-center justify-center transition-all shadow-md active:scale-95 shrink-0"
+              className="w-11 h-11 sm:w-10 sm:h-10 rounded-xl bg-maroon hover:bg-maroon-800 disabled:opacity-40 text-white flex items-center justify-center transition-all shadow-md active:scale-95 shrink-0"
               aria-label="Send message"
             >
               <Send className="w-4 h-4" />

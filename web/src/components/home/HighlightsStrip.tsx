@@ -45,7 +45,7 @@ export const HighlightsStrip: React.FC = () => {
                   <Icon className="w-6 h-6 text-maroon" />
                 </div>
                 <div>
-                  <h3 className="font-serif font-bold text-base text-navy leading-tight">
+                  <h3 className="font-sans font-bold text-base text-navy leading-tight">
                     {item.title}
                   </h3>
                   <p className="text-xs font-semibold text-gold-700 tracking-wide uppercase mt-0.5 font-numeral">
