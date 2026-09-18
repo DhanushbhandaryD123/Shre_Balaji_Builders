@@ -37,9 +37,6 @@ export const GalleryPreview: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-6">
           <SectionReveal yOffset={20}>
-            <Badge variant="maroon" className="mb-3">
-              Visual Tour
-            </Badge>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-navy tracking-tight leading-tight">
               A Glimpse of Balaji Bentota
             </h2>

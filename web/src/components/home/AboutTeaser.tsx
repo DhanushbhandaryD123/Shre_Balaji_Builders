@@ -18,26 +18,12 @@ export const AboutTeaser: React.FC = () => {
               aspectRatio="aspect-[4/3]"
               className="shadow-2xl object-cover"
             />
-            {/* Floating Experience Badge */}
-            <div className="absolute -bottom-6 -right-4 sm:bottom-6 sm:-right-6 bg-white p-5 rounded-2xl shadow-xl border border-navy/5 max-w-xs z-10 hidden sm:block">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-gold-50 text-gold-700 flex items-center justify-center font-bold">
-                  <Award className="w-6 h-6" />
-                </div>
-                <div>
-                  <p className="font-serif font-bold text-navy text-sm">ISO 9001:2015</p>
-                  <p className="text-[11px] text-slate-500">Planned by A.G. Associates</p>
-                </div>
-              </div>
-            </div>
+            
           </div>
 
           {/* Right Column: Copy & Details */}
           <div className="lg:col-span-6">
             <SectionReveal yOffset={30}>
-              <Badge variant="maroon" className="mb-4">
-                The Developer Legacy
-              </Badge>
 
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-navy tracking-tight leading-tight mb-6">
                 Transforming Ideas Into Landmark Addresses

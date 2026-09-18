@@ -46,9 +46,6 @@ export const QuickContactBand: React.FC = () => {
           {/* Left Column: Direct Call & Location Details */}
           <div className="lg:col-span-5 p-8 sm:p-12 text-white flex flex-col justify-between bg-gradient-to-br from-navy via-navy to-navy-950 border-b lg:border-b-0 lg:border-r border-white/10">
             <div>
-              <Badge variant="gold" className="mb-4 text-gold-300 border-gold/40">
-                Direct Booking Desk
-              </Badge>
               <h2 className="text-3xl sm:text-4xl font-serif font-bold tracking-tight text-white mb-4">
                 Secure Your Home at Balaji Bentota
               </h2>
